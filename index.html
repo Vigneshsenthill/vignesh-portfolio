@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vignesh S — AWS Cloud Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #112240;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --white: #f5f5f0;
+    --gray: #8892a4;
+    --light-bg: #f8f7f4;
+    --border: rgba(201,168,76,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--light-bg);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(10,22,40,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(245,245,240,0.7);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; align-items: center;
+    padding: 0 8%;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -20%; right: -10%;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: 10%; left: 5%;
+    width: 300px; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center; width: 100%; max-width: 1200px;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    padding: 6px 16px;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-desc {
+    color: rgba(245,245,240,0.6);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 12px 28px;
+    border: none; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 12px 28px;
+    border: 1px solid rgba(245,245,240,0.3);
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    display: flex; flex-direction: column; gap: 2rem;
+    padding-left: 3rem;
+    border-left: 1px solid var(--border);
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+  .stat-card:hover { background: rgba(201,168,76,0.06); }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .stat-label {
+    color: rgba(245,245,240,0.5);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 8%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    color: var(--navy);
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  /* ABOUT */
+  #about { background: var(--light-bg); }
+  .about-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: #3a4556;
+    margin-bottom: 1.2rem;
+  }
+  .skills-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  .skill-pill {
+    background: var(--navy);
+    color: rgba(245,245,240,0.85);
+    padding: 10px 14px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    border-left: 3px solid var(--gold);
+  }
+  .skill-pill::before { content: '▸'; color: var(--gold); font-size: 0.7rem; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .project-card {
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(10,22,40,0.08);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(10,22,40,0.12);
+  }
+  .project-header {
+    background: var(--navy);
+    padding: 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .project-icon {
+    width: 44px; height: 44px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+  .project-tag {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(201,168,76,0.12);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+  .project-body { padding: 1.5rem; }
+  .project-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+  }
+  .project-body p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #5a6475;
+    margin-bottom: 1rem;
+  }
+  .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tech-tag {
+    font-size: 0.72rem;
+    color: var(--navy);
+    background: #eae8e2;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  /* CERTIFICATIONS */
+  .cert-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .cert-card {
+    background: white;
+    border: 1px solid rgba(10,22,40,0.08);
+    border-radius: 4px;
+    padding: 1.5rem;
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+  }
+  .cert-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .cert-badge {
+    width: 48px; height: 48px;
+    min-width: 48px;
+    background: var(--navy);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .cert-info h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .cert-info .cert-issuer {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 6px;
+  }
+  .cert-score {
+    font-size: 0.78rem;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .cert-link-hint {
+    font-size: 0.72rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--navy);
+    padding: 6rem 8%;
+  }
+  .contact-inner { max-width: 1200px; margin: 0 auto; }
+  .contact-inner .section-title { color: var(--white); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.3fr;
+    gap: 5rem; align-items: start;
+  }
+  .contact-info p {
+    color: rgba(245,245,240,0.6);
+    line-height: 1.8; font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    color: rgba(245,245,240,0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(245,245,240,0.07);
+  }
+  .contact-link:hover { color: var(--gold); }
+  .contact-link-icon {
+    width: 36px; height: 36px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(245,245,240,0.5);
+    font-weight: 500;
+  }
+  .form-group input, .form-group textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(245,245,240,0.12);
+    border-radius: 3px;
+    padding: 12px 16px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group input::placeholder, .form-group textarea::placeholder {
+    color: rgba(245,245,240,0.25);
+  }
+  .form-submit {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 14px 32px;
+    border: none; border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.2s;
+  }
+  .form-submit:hover { background: var(--gold-light); }
+
+  footer {
+    background: #060f1e;
+    text-align: center;
+    padding: 2rem;
+    color: rgba(245,245,240,0.3);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 768px) {
+    .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .projects-grid, .cert-grid { grid-template-columns: 1fr; }
+    .hero-stats { padding-left: 0; border-left: none; border-top: 1px solid var(--border); padding-top: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    nav { padding: 0 4%; }
+    .nav-links { gap: 1rem; }
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Vignesh</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-tag">Available for Opportunities</div>
+      <h1>Vignesh <span>S</span></h1>
+      <p class="hero-desc">AWS Junior Cloud Engineer with hands-on expertise in EC2, S3, IAM, RDS, and VPC. Passionate about building scalable, secure, and cost-effective cloud infrastructure.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Get In Touch</a>
+        <a href="#projects" class="btn-outline">View Projects</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">914</div>
+        <div class="stat-label">AWS Cloud Practitioner Score</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Cloud Certifications</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">AWS Projects Deployed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Who I Am</div>
+  <div class="section-title">About Me</div>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>I'm a motivated AWS Cloud Engineer currently completing my Bachelor of Engineering in Computer Science (Cyber Security) at Easa College of Engineering and Technology, Coimbatore — graduating in 2026 with an 8.5 CGPA.</p>
+      <p>Through the AWS re/Start Cloud Program and hands-on project work, I've developed strong fundamentals in cloud architecture, IAM security, and scalable deployment. I completed my AWS Cloud Practitioner certification with a score of 914/1000.</p>
+      <p>I'm passionate about cloud security, DevOps practices, and building infrastructure that is both reliable and cost-efficient. I'm looking for opportunities where I can grow, contribute, and build real-world cloud solutions.</p>
+    </div>
+    <div>
+      <div class="skills-grid">
+        <div class="skill-pill">EC2 / S3 / RDS</div>
+        <div class="skill-pill">IAM & Security</div>
+        <div class="skill-pill">VPC & Networking</div>
+        <div class="skill-pill">CloudWatch</div>
+        <div class="skill-pill">Linux</div>
+        <div class="skill-pill">Python (Basics)</div>
+        <div class="skill-pill">Git & GitHub</div>
+        <div class="skill-pill">TCP/IP & DNS</div>
+        <div class="skill-pill">High Availability</div>
+        <div class="skill-pill">Cloud Migration</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<div style="background:#f0ede8; padding: 6rem 8%;">
+  <div style="max-width:1200px; margin:0 auto;" id="projects">
+    <div class="section-label">What I've Built</div>
+    <div class="section-title">Projects</div>
+    <div class="projects-grid fade-in">
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🌐</div>
+          <div class="project-tag">AWS S3</div>
+        </div>
+        <div class="project-body">
+          <h3>Static Website Hosting</h3>
+          <p>Hosted a personal portfolio website using AWS S3 static website hosting with public access enabled. Configured bucket policies and DNS settings for reliable public access.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Amazon S3</span>
+            <span class="tech-tag">Static Hosting</span>
+            <span class="tech-tag">Bucket Policy</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🔐</div>
+          <div class="project-tag">S3 + IAM</div>
+        </div>
+        <div class="project-body">
+          <h3>Secure File Storage System</h3>
+          <p>Built a secure cloud file storage system for uploading and downloading files using Amazon S3. Configured IAM users and fine-grained policies to control access and ensure data security.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Amazon S3</span>
+            <span class="tech-tag">IAM Policies</span>
+            <span class="tech-tag">Cloud Security</span>
+            <span class="tech-tag">Access Control</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">Credentials</div>
+  <div class="section-title">Certifications</div>
+  <div class="cert-grid fade-in">
+    <a href="YOUR_CREDLY_LINK_HERE" target="_blank" class="cert-card">
+      <div class="cert-badge">☁️</div>
+      <div class="cert-info">
+        <h4>AWS Cloud Practitioner</h4>
+        <div class="cert-issuer">Amazon Web Services</div>
+        <div class="cert-score">★ Score: 914 / 1000</div>
+        <div class="cert-link-hint">🔗 Click to view on Credly</div>
+      </div>
+    </a>
+    <div class="cert-card" style="cursor:default;">
+      <div class="cert-badge">📘</div>
+      <div class="cert-info">
+        <h4>Cloud Fundamentals</h4>
+        <div class="cert-issuer">Udemy</div>
+        <div class="cert-score">✓ Completed</div>
+      </div>
+    </div>
+    <div class="cert-card" style="cursor:default;">
+      <div class="cert-badge">🚀</div>
+      <div class="cert-info">
+        <h4>Cloud Introduction</h4>
+        <div class="cert-issuer">AWS re/Start Program</div>
+        <div class="cert-score">✓ Completed</div>
+      </div>
+    </div>
+    <div class="cert-card" style="cursor:default;">
+      <div class="cert-badge">🏢</div>
+      <div class="cert-info">
+        <h4>Cloud Simulation</h4>
+        <div class="cert-issuer">Tata</div>
+        <div class="cert-score">✓ Completed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="color:var(--gold);">Let's Connect</div>
+    <div class="section-title">Contact</div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>I'm actively looking for junior cloud engineering roles where I can apply my AWS skills and continue growing. Feel free to reach out for opportunities or collaboration.</p>
+        <div class="contact-links">
+          <a href="tel:+919087003771" class="contact-link">
+            <div class="contact-link-icon">📞</div>
+            +91 9087003771
+          </a>
+          <a href="mailto:vigneshsenthill95@gmail.com" class="contact-link">
+            <div class="contact-link-icon">✉️</div>
+            vigneshsenthill95@gmail.com
+          </a>
+          <a href="YOUR_LINKEDIN_URL" target="_blank" class="contact-link">
+            <div class="contact-link-icon">💼</div>
+            LinkedIn Profile
+          </a>
+          <a href="YOUR_GITHUB_URL" target="_blank" class="contact-link">
+            <div class="contact-link-icon">🐙</div>
+            GitHub Profile
+          </a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" placeholder="john@company.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" placeholder="Job Opportunity / Collaboration" required>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Hi Vignesh, I'd like to discuss..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 Vignesh S — AWS Cloud Engineer · Coimbatore, Tamil Nadu</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Message Sent!';
+    btn.style.background = '#4caf7a';
+    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+</script>
+</body>
+</html>
